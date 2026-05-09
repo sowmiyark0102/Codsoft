@@ -1,0 +1,95 @@
+import re
+import datetime
+
+def chatbot():
+    print("Chatbot: Hey! I'm your smart chatbot 🤖")
+    print("Type 'bye' to exit.\n")
+
+    user_name = None
+    mood_memory = None
+
+    while True:
+        user_input = input("You: ").lower().strip()
+
+        # Exit
+        if user_input == "bye":
+            print("Chatbot: Goodbye! Take care 😊")
+            break
+
+        # Store name
+        name_match = re.search(r"my name is (\w+)", user_input)
+        if name_match:
+            user_name = name_match.group(1).capitalize()
+            print(f"Chatbot: Nice to meet you, {user_name}!")
+            continue
+
+        # Greeting with memory
+        elif re.search(r"\b(hi|hello|hey)\b", user_input):
+            if user_name:
+                print(f"Chatbot: Hey {user_name}! How can I help you?")
+            else:
+                print("Chatbot: Hello! What's your name?")
+
+        # Ask name
+        elif "your name" in user_input:
+            print("Chatbot: I'm a smart rule-based chatbot.")
+
+        # Ask time
+        elif "time" in user_input:
+            now = datetime.datetime.now().strftime("%H:%M:%S")
+            print(f"Chatbot: Current time is {now}")
+
+        # Ask date
+        elif "date" in user_input:
+            today = datetime.datetime.now().strftime("%d-%m-%Y")
+            print(f"Chatbot: Today's date is {today}")
+
+        # How are you
+        elif "how are you" in user_input:
+            print("Chatbot: I'm doing great! What about you?")
+
+        # Detect mood (basic sentiment)
+        elif re.search(r"\b(sad|tired|upset|angry)\b", user_input):
+            mood_memory = "negative"
+            print("Chatbot: That sounds tough. Want to talk about it?")
+
+        elif re.search(r"\b(happy|good|great|awesome)\b", user_input):
+            mood_memory = "positive"
+            print("Chatbot: That's awesome to hear! 😊")
+
+        # Recall mood
+        elif "how do i feel" in user_input:
+            if mood_memory == "positive":
+                print("Chatbot: You seemed happy earlier 😄")
+            elif mood_memory == "negative":
+                print("Chatbot: You seemed a bit down earlier 😔")
+            else:
+                print("Chatbot: I'm not sure yet. Tell me how you feel!")
+
+        # Simple math (addition)
+        elif re.search(r"\d+\s*\+\s*\d+", user_input):
+            nums = re.findall(r"\d+", user_input)
+            result = int(nums[0]) + int(nums[1])
+            print(f"Chatbot: The answer is {result}")
+
+        # Jokes
+        elif "joke" in user_input:
+            print("Chatbot: Why don't programmers like nature? Too many bugs 😄")
+
+        # Help
+        elif "help" in user_input:
+            print("Chatbot: You can tell your name, ask time/date, do math, or chat!")
+
+        # Unknown input
+        else:
+            responses = [
+                "Hmm... interesting 🤔",
+                "Can you tell me more?",
+                "I see... go on",
+                "I'm not sure I understand, but I'm learning!"
+            ]
+            import random
+            print("Chatbot:", random.choice(responses))
+
+
+chatbot()
