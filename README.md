@@ -1,4 +1,4 @@
-CODSOFT Internship – AI Project Portfolio
+CODSOFT Internship 
 
 This repository contains Artificial Intelligence developed as part of the CODSOFT Internship program. The projects demonstrate practical implementation of core concepts in Natural Language Processing, Machine Learning, and Computer Vision using Python.
 
